@@ -1,0 +1,24 @@
+--needs same no of columns in all selects of union
+--even the data types of those columns in all those selects must match respectively
+
+
+select customer_id, null::varchar as product, null::date as order_date, sum(amount)
+from orders
+group by customer_id
+
+union all
+
+select null::int as customer_id, product, null::date as order_date, sum(amount)
+from orders
+group by product
+
+union all
+
+select null::int as customer_id, null::varchar as product, order_date, sum(amount)
+from orders
+group by order_date
+
+union all
+
+SELECT null::int as customer_id, null::varchar as product, null::date as order_date, sum(amount)
+from orders;

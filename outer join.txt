@@ -1,0 +1,21 @@
+--left join
+--count of employees who aren't managers'
+
+select a.emp_no, a.first_name, b.dept_no
+from employees as a
+left outer join dept_manager as b on b.emp_no = a.emp_no
+where b.dept_no is not null
+order by a.emp_no;
+
+
+
+
+--inner join and left join together
+select a.emp_no, a.first_name, b.salary, c.title, c.from_date as "promoted on"
+from employees as a
+inner join salaries as b on b.emp_no = a.emp_no
+left join titles as c on 
+	c.emp_no = b.emp_no 
+	and 
+	(((c.from_date - INTERVAL '2 days') = b.from_date) or c.from_date = b.from_date)
+order by a.emp_no asc, b.from_date asc;

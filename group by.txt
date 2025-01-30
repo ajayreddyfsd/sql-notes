@@ -1,0 +1,28 @@
+select dept_no, count(emp_no)
+from dept_emp
+group by dept_no
+order by dept_no;
+
+
+
+
+--how many hirings on each date
+select hire_date, count(emp_no)
+from employees
+group by hire_date
+order by hire_date;
+
+
+--how many hirings in each year
+select date_trunc('year', hire_date::date) as hire_year, count(emp_no)
+from employees
+group by hire_year
+order by hire_year;
+
+
+
+--how many hirings in each month
+select date_trunc('month', hire_date::date) as hire_month, count(emp_no)
+from employees
+group by hire_month
+order by hire_month;

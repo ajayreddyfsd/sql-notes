@@ -1,0 +1,6 @@
+--self join
+
+select a.emp_id, a.emp_name as "employee name", a.department, b.emp_name as "manager name"
+from employees as a
+inner join employees as b on b.emp_id = a.manager_id
+order by a.emp_id;

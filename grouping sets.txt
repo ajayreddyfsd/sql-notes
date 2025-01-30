@@ -1,0 +1,10 @@
+select customer_id, product, order_date, sum(amount)
+from orders
+group by grouping sets(
+
+(customer_id),
+(product),
+(order_date),
+()
+
+);

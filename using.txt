@@ -1,0 +1,13 @@
+select *
+from employees as a
+inner join dept_emp as b using(emp_no)
+order by emp_no;
+
+
+
+
+select a.emp_no, a.first_name, b.dept_no, c.dept_name
+from employees as a
+inner join dept_emp as b using(emp_no)
+inner join departments as c using(dept_no)
+order by emp_no;

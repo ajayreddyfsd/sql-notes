@@ -1,0 +1,29 @@
+/* most of the times, its PK to FK */
+
+
+--simple inner join of 2 tables
+select a.emp_no, a.first_name, b.salary
+from employees as a
+inner join salaries as b on b.emp_no = a.emp_no
+order by a.emp_no;
+
+
+
+--simple inner join on 3 tables
+select a.emp_no, a.first_name, b.salary, c.title, c.from_date as "promoted on"
+from employees as a
+inner join salaries as b on b.emp_no = a.emp_no
+inner join titles as c on (c.emp_no = b.emp_no) and ((c.from_date - INTERVAL '2 days') = b.from_date)
+order by a.emp_no asc, b.from_date asc;
+
+
+
+--simple inner join on 3 tables but with more complicated conditions
+select a.emp_no, a.first_name, b.salary, c.title, c.from_date as "promoted on"
+from employees as a
+inner join salaries as b on b.emp_no = a.emp_no
+inner join titles as c on 
+	c.emp_no = b.emp_no 
+	and 
+	(((c.from_date - INTERVAL '2 days') = b.from_date) or c.from_date = b.from_date)
+order by a.emp_no asc, b.from_date asc;
