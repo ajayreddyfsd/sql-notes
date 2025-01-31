@@ -1,0 +1,8 @@
+--error
+select *
+from salaries
+
+
+--how windown function can help
+select *, max(salary) over()
+from salaries

@@ -1,0 +1,20 @@
+--sales by each year
+--sales by each month of each year
+--sales by each day of each month of each year
+
+--sales by each month
+--sales by each month and each day
+
+select extract(year from orderdate) as year, extract(month from orderdate) as month, extract(day from orderdate) as day, sum(totalamount) as sales
+from orders
+group by grouping sets(
+
+(extract(year from orderdate)),
+(extract(year from orderdate), extract(month from orderdate)),
+(extract(year from orderdate), extract(month from orderdate), extract(day from orderdate)),
+(extract(month from orderdate)),
+(extract(month from orderdate), extract(day from orderdate))
+
+)
+
+order by extract(year from orderdate), extract(month from orderdate), extract(day from orderdate);

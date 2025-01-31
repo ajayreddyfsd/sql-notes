@@ -1,0 +1,25 @@
+--for avg salary of the whole table
+select *, avg(a.salary) over()
+from salaries as a
+inner join dept_emp as b using(emp_no)
+inner join departments as c using(dept_no)
+order by c.dept_no, a.emp_no;
+
+
+
+--for avg salary of the whole table but by dept
+select *, avg(a.salary) over(PARTITION by c.dept_no)
+from salaries as a
+inner join dept_emp as b using(emp_no)
+inner join departments as c using(dept_no)
+order by c.dept_no, a.emp_no;
+
+
+
+--for avg salary of the whole table but by both dept and employees with in that dept
+select *, avg(a.salary) over(PARTITION by c.dept_no, a.emp_no)
+from salaries as a
+inner join dept_emp as b using(emp_no)
+inner join departments as c using(dept_no)
+order by c.dept_no, a.emp_no;
+

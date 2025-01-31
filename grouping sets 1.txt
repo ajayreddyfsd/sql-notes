@@ -1,3 +1,8 @@
+--sales by customer_id
+--sales by product
+--sales by order_date
+
+
 select customer_id, product, order_date, sum(amount)
 from orders
 group by grouping sets(

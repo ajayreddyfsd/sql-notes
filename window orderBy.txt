@@ -1,0 +1,50 @@
+--simply dispays the total no of rows in each record by creating a new column
+select *, count(*) over()
+from salaries
+
+
+
+
+--normal grouping through window function
+--displays the result specific to that partition in all the rows of that partition
+select *, count(salary) over(partition by emp_no)
+from salaries
+
+
+
+
+--mostly used for cumulative things
+select *, count(salary) over(order by emp_no)
+from salaries
+
+
+
+--using both partition and order by
+--so groups by emp_no
+--sub groups by salary
+--while in the partition, cummulates instead of single value, since we used order by
+--once done with partition, resets and repeats the same for other partitions
+select *, count(salary) over(partition by emp_no order by salary)
+from salaries
+
+
+
+
+
+
+
+--to get the current salary of an employee
+--cant use max salary, coz they are taking cuts due to recession
+--first we grouped by emp_no and sub grouped by from_date
+--and then we asked it to find the last value
+select *, last_value(salary) over(PARTITION by emp_no order by d.from_date range between UNBOUNDED PRECEDING and UNBOUNDED FOLLOWING)
+from employees as a
+inner join dept_emp as b using(emp_no)
+inner join departments as c using(dept_no)
+inner join salaries as d using(emp_no)
+order by a.emp_no;
+
+
+
+
+

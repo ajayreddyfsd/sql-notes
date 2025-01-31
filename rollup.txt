@@ -1,0 +1,19 @@
+--sales by each year
+--sales by each month of each year
+--sales by each day of each month of each year
+
+--sales by each month
+--sales by each month and each day
+
+select extract(year from orderdate) as year, extract(month from orderdate) as month, extract(day from orderdate) as day, sum(totalamount) as sales
+from orders
+
+group by ROLLUP(
+
+extract(year from orderdate),
+extract(month from orderdate), 
+extract(DAY from orderdate)
+
+)
+
+order by extract(year from orderdate), extract(month from orderdate), extract(day from orderdate);

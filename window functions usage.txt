@@ -1,0 +1,68 @@
+--for first value
+--this is complex way, there is an easy way without framing
+select *, first_value(price) over(PARTITION by category order by price range between unbounded preceding and UNBOUNDED FOLLOWING)
+from products
+order by category;
+
+
+
+
+
+--for last value
+--this is complex way, there is an easy way without framing
+select *, last_value(price) over(PARTITION by category order by price range between unbounded preceding and UNBOUNDED FOLLOWING)
+from products
+order by category;
+
+
+
+
+--sum
+--how much amount the customer ordered
+select *, sum(totalamount) over(PARTITION by customerid)
+from orders
+
+
+
+
+--sum
+--how much amount the customer ordered cummulatively
+select *, sum(totalamount) over(PARTITION by customerid order by totalamount)
+from orders
+
+
+
+
+--sum
+--how much amount the customer ordered cummulatively
+select *, sum(totalamount) over(PARTITION by customerid order by orderid)
+from orders
+
+
+
+
+--row number
+select *, row_number() over(PARTITION by price)
+from products
+
+
+
+
+--percentage of continent population over world population
+select DISTINCT continent, round( (sum(population) over(PARTITION by continent))::float * 100 / sum(population) over() )
+from country
+
+
+
+--same as prev but in a presentable way
+select DISTINCT continent, sum(population) over(PARTITION by continent) as "continent population", concat(round( (sum(population) over(PARTITION by continent))::float * 100 / sum(population) over() ), ' %') as "percentage population"
+from country
+
+
+
+--no of towns in a region
+select distinct c.id as regId, c.name as regName, count(a.name) over(PARTITION by c.id)
+from towns as a
+inner join departments as b on b.code = a.department
+inner join regions as c on c.code = b.region
+order by c.id;
