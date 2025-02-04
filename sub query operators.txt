@@ -1,0 +1,6 @@
+exists
+in
+not in
+any
+some
+all

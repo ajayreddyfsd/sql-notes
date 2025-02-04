@@ -1,0 +1,28 @@
+-- correlated
+-- iq cannot execute on its own unlike other SQs
+-- need to run for each outer row by taking inputs from the same outer row
+-- in this example, we used the same table for both outer and inner queries
+-- writing inner query first helps a lot
+
+
+
+
+--inner query
+-- select max(from_date)
+-- from salaries as i
+-- where i.emp_no = o.emp_no
+
+
+
+select *
+from salaries as o
+where from_date = (
+    
+    select max(from_date)
+    from salaries as i
+    where i.emp_no = o.emp_no
+    
+    );
+
+
+

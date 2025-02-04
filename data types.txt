@@ -1,0 +1,73 @@
+CREATE TABLE detailed_example_table (
+    
+    -- Integer Types
+    small_int SMALLINT,                       -- SMALLINT: 2-byte integer (range: -32,768 to 32,767)
+    normal_int INTEGER,                       -- INTEGER: 4-byte integer (range: -2,147,483,648 to 2,147,483,647)
+    big_int BIGINT,                           -- BIGINT: 8-byte integer (large range)
+    serial_id SERIAL PRIMARY KEY,             -- SERIAL: Auto-incrementing integer
+    bigserial_id BIGSERIAL,                   -- BIGSERIAL: Auto-incrementing large integer
+    
+
+    -- Float Types
+    float4_column FLOAT,                      -- FLOAT(4): 4-byte single precision floating point
+    float8_column DOUBLE PRECISION,           -- DOUBLE PRECISION: 8-byte double precision floating point
+    precise_float FLOAT(6),                   -- FLOAT(6): Floating point with 6 significant digits
+
+
+    -- Numeric Types
+    price NUMERIC(10, 2),                     -- NUMERIC: Exact numeric with 10 total digits and 2 decimal places
+    rating DECIMAL(15, 6),                    -- same as above
+
+    
+    -- Char Types
+    char_column CHAR(5),                      -- CHAR(5): Fixed-length string (padded with spaces)
+    varchar_column VARCHAR(100),              -- VARCHAR(100): Variable-length string with max length of 100 characters
+    text_column TEXT,                         -- TEXT: Unrestricted length string
+    
+
+    -- Date and Boolean Types
+    birth_date DATE,                          -- DATE: Date without time (year, month, day)
+    is_active BOOLEAN,                        -- BOOLEAN: True/False value
+    
+
+    -- UUID Type
+    user_uuid UUID DEFAULT gen_random_uuid(), -- UUID: Universally unique identifier
+  
+    
+    -- Binary Data
+    image_data BYTEA,                         -- BYTEA: Binary data (for images or files)
+    
+
+    -- Arrays
+    tags TEXT[],                              -- TEXT[]: Array of text strings (tags or categories)
+    numbers INTEGER[],                        -- INTEGER[]: Array of integers (e.g., list of counts or IDs)
+    float_array FLOAT[],                      -- FLOAT[]: Array of floating-point numbers (e.g., list of ratings)
+    boolean_array BOOLEAN[]                   -- BOOLEAN[]: Array of boolean values (e.g., flags)
+);
+
+
+
+
+
+
+
+INSERT INTO detailed_example_table (
+    small_int, normal_int, big_int, serial_id, bigserial_id, 
+    float4_column, float8_column, precise_float, 
+    price, rating, 
+    char_column, varchar_column, text_column, 
+    birth_date, is_active, user_uuid, 
+    image_data, 
+    tags, numbers, float_array, boolean_array
+) 
+VALUES 
+(
+    5, 100, 10000000000, DEFAULT, DEFAULT,            -- Integer types
+    3.14, 3.1415926535, 3.141,                         -- Floating types
+    199.99, 9.87654321,                               -- Numeric types
+    'ABCDE', 'Sample Name', 'This is a text column',  -- Char types
+    '1992-06-15', TRUE, gen_random_uuid(),           -- Date, boolean and UUID
+    NULL,                                             -- Image Data (for simplicity, NULL for now)
+    ARRAY['tech', 'gaming'], ARRAY[1, 2, 3], ARRAY[4.5, 6.7], ARRAY[TRUE, FALSE]  -- Arrays
+);
+

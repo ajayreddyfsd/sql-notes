@@ -1,0 +1,45 @@
+--in select for new col or
+select *,
+
+case 
+
+when price < 10 then 'cheap'
+when price BETWEEN 10 and 20 then 'average'
+when price > 20 then 'expensive'
+else 'no data'
+
+end as "price class"
+
+from products
+
+
+
+
+
+
+
+
+--in where for more complex filtering
+select *, count( * ) over(PARTITION by special order by price)
+from products
+WHERE
+
+CASE
+when price > 20 and special != 0 then false 
+when price < 20 and category != 7 then FALSE
+else TRUe
+end
+
+
+
+
+
+
+
+
+--in aggregate functions as conditional agg functions
+select count( case when special = 0 then 1 end ) as "special 0 count", count( case when special = 1 then 1 end ) as "special 1 count"
+from products
+
+
+

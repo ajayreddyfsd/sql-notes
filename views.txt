@@ -1,0 +1,39 @@
+--create view
+create or replace view recent_salary_change_date as
+
+select a.emp_no, a.first_name, max(d.from_date)
+from employees as a
+inner join dept_emp as b using(emp_no)
+inner join departments as c using(dept_no)
+inner join salaries as d using(emp_no)
+group by emp_no
+order by emp_no;
+
+
+
+
+--query view
+select *
+from recent_salary_change_date;
+
+
+
+
+--query to get the current salary using view
+select *
+from recent_salary_change_date as a
+inner join salaries as b on b.emp_no = a.emp_no and b.from_date = a.max
+order by a.emp_no;
+
+
+
+
+--to get only those employees who make big bucks
+create or replace view bigbucks as
+
+select emp_no, first_name, min(salary)
+from employees as a
+inner join salaries as b USING(emp_no)
+where salary > 80000
+GROUP by emp_no
+order by emp_no;

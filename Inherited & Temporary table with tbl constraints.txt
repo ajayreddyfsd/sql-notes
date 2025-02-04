@@ -1,0 +1,27 @@
+--temporary, inherited table with constraints
+CREATE TEMPORARY TABLE child_table (
+    address VARCHAR(255),             -- A new column for the child table
+    phone_number VARCHAR(15),         -- Another new column
+    email VARCHAR(100) UNIQUE,        -- A unique constraint for the email column
+    reference_id INT,                 -- Foreign key column
+
+
+    PRIMARY KEY (id),                 -- Primary key constraint for the child table (inherits from base_table)
+    CONSTRAINT valid_address_length CHECK (char_length(address) > 5), -- Address length should be more than 5 characters
+    CONSTRAINT check_phone_number_format CHECK (phone_number ~ '^\+?[0-9]+$'), -- Phone number format check
+    CONSTRAINT check_email_domain CHECK (email LIKE '%@%.com'),  -- Email domain must end with '.com'
+    CONSTRAINT fk_reference FOREIGN KEY (reference_id) REFERENCES reference_table (reference_id) -- Foreign key constraint
+
+) INHERITS (base_table);             -- Inherit from base_table
+
+
+
+
+-- Adding additional table-level constraints to the child table
+ALTER TABLE child_table
+    ADD CONSTRAINT check_phone_number_format CHECK (phone_number ~ '^\+?[0-9]+$'),  -- Check constraint for phone number format (numeric with optional + sign)
+    ADD CONSTRAINT check_email_domain CHECK (email LIKE '%@%.com');  -- Check constraint to ensure email ends with ".com"
+
+
+
+

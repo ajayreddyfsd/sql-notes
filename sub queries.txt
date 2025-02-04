@@ -1,0 +1,7 @@
+select *
+from employees
+where age(birth_date) > (
+
+select avg(age(birth_date)) from employees
+
+);
