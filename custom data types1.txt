@@ -1,0 +1,18 @@
+--to customize existing ones
+
+CREATE DOMAIN positive_int AS INTEGER
+    CHECK (VALUE > 0);
+
+
+CREATE DOMAIN email AS VARCHAR(255)
+    CHECK (VALUE ~* '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$');
+
+
+
+--using the above ones
+CREATE TABLE users (
+    user_id SERIAL PRIMARY KEY,
+    name VARCHAR(100),
+    email email,           -- Uses the email domain
+    age positive_int       -- Uses the positive_int domain
+);

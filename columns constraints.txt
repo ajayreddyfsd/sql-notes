@@ -1,0 +1,25 @@
+CREATE TABLE employee (
+    -- Basic Columns
+    emp_id SERIAL PRIMARY KEY,               -- Primary key, auto-incremented
+    first_name VARCHAR(50) NOT NULL,          -- Not null constraint
+    last_name VARCHAR(50) NOT NULL,           -- Not null constraint
+    email VARCHAR(100) UNIQUE,                -- Unique constraint for email
+    phone_number VARCHAR(15) DEFAULT 'N/A',  -- Default value
+    hire_date DATE NOT NULL,                  -- Not null constraint
+    salary NUMERIC(10, 2) CHECK (salary > 0), -- Check constraint (salary must be positive)
+    
+    -- Date Constraints
+    birth_date DATE CHECK (birth_date < CURRENT_DATE), -- Check constraint (birth date must be in the past)
+    
+    -- Foreign Key Reference
+    department_id INTEGER,                   -- Department id (foreign key)
+    FOREIGN KEY (department_id) REFERENCES department(department_id) 
+        ON DELETE SET NULL                   -- Foreign key constraint with action on delete
+
+);
+
+-- Example of a department table for reference
+CREATE TABLE department (
+    department_id SERIAL PRIMARY KEY, 
+    department_name VARCHAR(100) NOT NULL UNIQUE
+);

@@ -1,0 +1,8 @@
+create table enrollment(
+
+course_id UUID REFERENCES course(course_id),
+student_id UUid references student(student_id),
+enrollment_date DATE not NULL,
+CONSTRAINT x PRIMARY key (course_id, student_id)
+
+);

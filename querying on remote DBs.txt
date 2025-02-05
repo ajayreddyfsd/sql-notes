@@ -1,0 +1,17 @@
+-- syntax
+-- SELECT *
+-- FROM dblink('connection_string', 
+--             'SELECT column1, column2, column3 FROM table_name;') 
+-- AS alias_name(column1 data_type1, column2 data_type2, column3 data_type3);
+
+
+--TO INSTALL THIS EXTENSION
+create extension dblink;
+
+
+--to get the emp_no from the employees table of Employees db, which is a remote db btw
+--so, dblink() to connect to that remote db and querying on it
+--and, t1() to present the results
+SELECT *
+FROM dblink('host=localhost user=postgres password=root dbname=Movr_Employees', 'SELECT first_name, last_name FROM employees;') 
+    AS t1(first_name varchar(14), last_name varchar(16)) 

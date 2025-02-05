@@ -1,0 +1,30 @@
+--to create custom types
+
+CREATE TYPE user_status AS ENUM ('active', 'inactive', 'suspended');
+
+
+
+CREATE TYPE full_address AS (
+    street VARCHAR(100),
+    city VARCHAR(100),
+    state VARCHAR(50),
+    country VARCHAR(50)
+);
+
+
+
+
+--using the above ones
+-- Using ENUM type in a table
+
+CREATE TABLE users (
+    user_id SERIAL PRIMARY KEY,
+    name VARCHAR(100),
+    status user_status
+);
+
+-- Using COMPOSITE type in a table
+CREATE TABLE employee_addresses (
+    employee_id SERIAL PRIMARY KEY,
+    address full_address
+);

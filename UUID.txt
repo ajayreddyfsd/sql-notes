@@ -1,0 +1,8 @@
+-- Example of another table that also uses UUID
+CREATE TABLE user_profile (
+    profile_id UUID PRIMARY KEY DEFAULT gen_random_uuid(), -- Primary key with UUID
+    user_id UUID NOT NULL,                                 -- Foreign key reference
+    bio TEXT,
+    profile_picture BYTEA,                                 -- Binary data for the profile picture (optional)
+    FOREIGN KEY (user_id) REFERENCES user_account(user_id) -- Foreign key reference to user_account
+);
